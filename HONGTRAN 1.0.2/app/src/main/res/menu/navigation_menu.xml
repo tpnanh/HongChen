@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Trang chủ"
+        android:id="@+id/action_home"
+        />
+
+    <item
+        android:title="Playing"
+        android:id="@+id/action_playing"
+        />
+
+    <item
+        android:title="Cá nhân"
+        android:id="@+id/action_myplay"
+        />
+
+</menu>

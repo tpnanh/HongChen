@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageviewsearchbaihat"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="55dp"
+        android:layout_height="60dp">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/textviewsearchbaihattenbaihat"
+        android:textSize="20sp"
+        android:text="TEN CA KHUC"
+        android:textColor="#030303"
+        android:layout_toRightOf="@id/imageviewsearchbaihat"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxWidth="250dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textviewsearchbaihattencasi"
+        android:textSize="18sp"
+        android:text="CA SI"
+        android:textColor="#979797"
+        android:layout_toRightOf="@id/imageviewsearchbaihat"
+        android:layout_below="@id/textviewsearchbaihattenbaihat"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxWidth="250dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+    <ImageView
+        android:src="@drawable/tools"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/imageviewtuychonbaihat"
+        android:background="@null"
+        android:layout_width="30dp"
+        android:layout_height="30dp">
+
+    </ImageView>
+
+</RelativeLayout>

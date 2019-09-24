@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Search"
+            android:id="@+id/fragmentsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Banner"
+            android:id="@+id/fragmentbanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Playlist"
+            android:id="@+id/fragmentplaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_PhoBien"
+            android:id="@+id/fragmentplaylistphobien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Video"
+            android:id="@+id/fragmentvideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Ost"
+            android:id="@+id/fragmentost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_Ktt"
+            android:id="@+id/fragmentktt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_ChuDe"
+            android:id="@+id/fragmentchude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+        <fragment
+            android:name="com.example.hongchen.Fragment.Fragment_DeXuat"
+            android:id="@+id/fragmentdexuat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fragment>
+
+    </LinearLayout>
+
+</ScrollView>

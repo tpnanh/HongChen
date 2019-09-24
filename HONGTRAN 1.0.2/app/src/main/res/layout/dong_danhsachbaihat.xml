@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:elevation="5dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="25sp"
+            android:id="@+id/textviewdanhsachindex"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/textviewtenbaihat"
+            android:textSize="20sp"
+            android:text="TEN CA KHUC"
+            android:textColor="#030303"
+            android:layout_toRightOf="@id/textviewdanhsachindex"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/textviewtencasi"
+            android:textSize="18sp"
+            android:text="CA SI"
+            android:textColor="#979797"
+            android:layout_toRightOf="@id/textviewdanhsachindex"
+            android:layout_below="@id/textviewtenbaihat"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <ImageView
+            android:src="@drawable/tools"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/imageviewtuychonbaihat"
+            android:background="@null"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

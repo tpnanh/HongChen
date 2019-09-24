@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "871229287356",
+    "firebase_url": "https://honggchenn.firebaseio.com",
+    "project_id": "honggchenn",
+    "storage_bucket": "honggchenn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871229287356:android:ff086b9c2c72ba5368d9b9",
+        "android_client_info": {
+          "package_name": "com.example.hongchen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871229287356-d64chigpdj8io9mjp75qghakm376jfgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmxjUVcz6MjYzQqUafOv1EJJawwV9d69E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871229287356-d64chigpdj8io9mjp75qghakm376jfgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
