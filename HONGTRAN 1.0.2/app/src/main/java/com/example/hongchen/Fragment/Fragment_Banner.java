@@ -2,15 +2,9 @@ package com.example.hongchen.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.hongchen.Adapter.BannerAdapter;
 import com.example.hongchen.Model.Quangcao;
@@ -21,6 +15,10 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,22 +36,24 @@ public class Fragment_Banner extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_banner,container,false);
-        getData();
+        view = inflater.inflate(R.layout.fragment_banner, container, false);
         anhxa();
-        return view;
+        getData();
+        return view;//chua duoc luon
     }
 
     public void getData() {
+        bannerAdapter = new BannerAdapter(getContext(), new ArrayList<Quangcao>());
+        viewPager.setAdapter(bannerAdapter);
+        circleIndicator.setViewPager(viewPager);
+
         Dataservice dataservice = APIService.getService();
         Call<List<Quangcao>> callback = dataservice.GetDataBanner();
         callback.enqueue(new Callback<List<Quangcao>>() {
             @Override
             public void onResponse(Call<List<Quangcao>> call, Response<List<Quangcao>> response) {
                 ArrayList<Quangcao> banners = (ArrayList<Quangcao>) response.body();
-                bannerAdapter = new BannerAdapter(getActivity(),banners);
-                viewPager.setAdapter(bannerAdapter);
-                circleIndicator.setViewPager(viewPager);
+                bannerAdapter.setData(banners);//crash roi
 
                 handler = new Handler();
                 runnable = new Runnable() {
@@ -61,15 +61,16 @@ public class Fragment_Banner extends Fragment {
                     public void run() {
                         currentItem = viewPager.getCurrentItem();
                         currentItem++;
-                        if (currentItem >= viewPager.getAdapter().getCount()) {
+                        if (currentItem >= (viewPager.getAdapter()).getCount()) {
                             currentItem = 0;
                         }
-                        viewPager.setCurrentItem(currentItem,true);
-                        handler.postDelayed(runnable,4500);
+
+                        viewPager.setCurrentItem(currentItem, true);
+                        handler.postDelayed(runnable, 10000);
                     }
                 };
 
-                handler.postDelayed(runnable,4500);
+                handler.postDelayed(runnable, 10000); // delay chi vay
 
             }
 

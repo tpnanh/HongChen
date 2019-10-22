@@ -109,7 +109,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        Picasso.with(this).load(hinh).into(imageviewdanhsachbaihat);
+        Picasso.get().load(hinh).into(imageviewdanhsachbaihat);
     }
 
     private void getDataPlaylist(String idplaylist) {

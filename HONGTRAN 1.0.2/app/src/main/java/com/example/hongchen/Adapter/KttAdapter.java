@@ -7,14 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Model.Kichtruyenthanh;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class KttAdapter extends RecyclerView.Adapter<KttAdapter.ViewHolder>{
 
@@ -37,13 +37,18 @@ public class KttAdapter extends RecyclerView.Adapter<KttAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Kichtruyenthanh kichtruyenthanh = kichtruyenthanhArrayList.get(position);
-        Picasso.with(context).load(kichtruyenthanh.getHinhKTT()).into(holder.imageviewktt);
+        Picasso.get().load(kichtruyenthanh.getHinhKTT()).into(holder.imageviewktt);
         holder.textviewktt.setText(kichtruyenthanh.getTenKTT());
     }
 
     @Override
     public int getItemCount() {
-        return kichtruyenthanhArrayList.size();
+        if (kichtruyenthanhArrayList == null){
+            return 0;
+        }
+        else {
+            return kichtruyenthanhArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,4 +63,8 @@ public class KttAdapter extends RecyclerView.Adapter<KttAdapter.ViewHolder>{
         }
     }
 
+    public void setData(ArrayList<Kichtruyenthanh> data) {
+        this.kichtruyenthanhArrayList = data;
+        notifyDataSetChanged();
+    }
 }

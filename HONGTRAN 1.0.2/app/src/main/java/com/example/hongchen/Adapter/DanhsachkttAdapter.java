@@ -5,17 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hongchen.Model.Kichtruyenthanh;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DanhsachkttAdapter extends RecyclerView.Adapter<DanhsachkttAdapter.ViewHolder> {
     Context context;
@@ -37,13 +36,18 @@ public class DanhsachkttAdapter extends RecyclerView.Adapter<DanhsachkttAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Kichtruyenthanh kichtruyenthanh = kichtruyenthanhArrayList.get(position);
-        Picasso.with(context).load(kichtruyenthanh.getHinhKTT()).into(holder.imageviewdanhsachktt);
+        Picasso.get().load(kichtruyenthanh.getHinhKTT()).into(holder.imageviewdanhsachktt);
         holder.textviewtendanhsachktt.setText(kichtruyenthanh.getTenKTT());
     }
 
     @Override
     public int getItemCount() {
-        return kichtruyenthanhArrayList.size();
+        if (kichtruyenthanhArrayList == null){
+            return 0;
+        }
+        else {
+            return kichtruyenthanhArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

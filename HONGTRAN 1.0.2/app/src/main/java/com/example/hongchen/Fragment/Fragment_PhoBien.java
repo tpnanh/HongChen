@@ -2,18 +2,10 @@ package com.example.hongchen.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hongchen.Activity.DanhsachcacplaylistActivity;
 import com.example.hongchen.Adapter.PhobienAdapter;
@@ -25,11 +17,16 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_PhoBien extends Fragment{
+public class Fragment_PhoBien extends Fragment {
     View view;
     RecyclerView recyclerviewphobien;
     TextView tvphobien;
@@ -39,7 +36,8 @@ public class Fragment_PhoBien extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_phobien,container,false);
+        view = inflater.inflate(R.layout.fragment_phobien, container, false);
+        phobienAdapter = new PhobienAdapter(getContext(), new ArrayList<Playlist>());
         recyclerviewphobien = view.findViewById(R.id.listviewphobien);
         tvphobien = view.findViewById(R.id.textviewphobien);
         getData();
@@ -60,8 +58,8 @@ public class Fragment_PhoBien extends Fragment{
             @Override
             public void onResponse(Call<List<Playlist>> call, Response<List<Playlist>> response) {
                 playlists = (ArrayList<Playlist>) response.body();
-                phobienAdapter = new PhobienAdapter(getActivity(),playlists);
-                recyclerviewphobien.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                phobienAdapter.setData(playlists);
+                recyclerviewphobien.setLayoutManager(new GridLayoutManager(getActivity(), 3));
                 recyclerviewphobien.setAdapter(phobienAdapter);
             }
 

@@ -1,12 +1,7 @@
 package com.example.hongchen.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.hongchen.Adapter.DanhsachvideoAdapter;
 import com.example.hongchen.Model.Video;
@@ -17,12 +12,15 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DanhsachvideoActivity extends AppCompatActivity {
-
     Toolbar toolbardanhsachvideo;
     RecyclerView recyclerviewdanhsachvideo;
     DanhsachvideoAdapter danhsachvideoAdapter;

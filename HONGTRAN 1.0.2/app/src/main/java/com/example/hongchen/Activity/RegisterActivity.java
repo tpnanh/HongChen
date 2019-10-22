@@ -1,10 +1,6 @@
 package com.example.hongchen.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hongchen.Fragment.Fragment_Account;
 import com.example.hongchen.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,8 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class RegisterActivity extends AppCompatActivity {
-    private EditText etUserName, etPassword, etPassword2;
+    private EditText etEmail, etUserName, etPassword, etPassword2;
     private CheckBox ckbAgree;
     private Button btnRegister;
 
@@ -39,10 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
 
-    public static String USERNAME = "username";
+    public static String EMAIL = "email";
     public static String PASSWORD = "password";
 
-    private String username, password, repassword;
+    private String email, username, password, repassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(RegisterActivity.this);
 
+        etEmail = findViewById(R.id.edittextemail_register);
         etUserName = findViewById(R.id.edittextusername_register);
         etPassword = findViewById(R.id.edittextpassword_register);
         etPassword2 = findViewById(R.id.edittextrepassword_register);
@@ -72,12 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void Register() {
+        email = etEmail.getText().toString();
         username = etUserName.getText().toString();
         password = etPassword.getText().toString();
         repassword = etPassword2.getText().toString();
 
-        if(TextUtils.isEmpty(username)){
+        if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "You must enter your email", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(username)){
+            Toast.makeText(this, "You must enter your username", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(password)){
             Toast.makeText(this, "You must enter your password", Toast.LENGTH_SHORT).show();
@@ -95,12 +98,12 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "You must accept the license", Toast.LENGTH_SHORT).show();
         }
         else{
-            createAccount(username,password);
+            createAccount(email,password);
         }
     }
 
-    private void createAccount(final String username, final String password) {
-        mAuth.createUserWithEmailAndPassword(username, password)
+    private void createAccount(final String email, final String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -122,7 +125,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     HashMap<String, Object> userdata = new HashMap<>();
                     userdata.put("Email",uid);
+                    userdata.put("Username",username);
                     userdata.put("Password",password);
+                    userdata.put("image","");
                     userRef.child("User").child(uid).updateChildren(userdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -141,7 +146,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void sendVerification() {

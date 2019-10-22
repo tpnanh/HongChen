@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 public class Baihat implements Parcelable {
 
     @SerializedName("IdBaiHat")
@@ -52,6 +50,14 @@ public class Baihat implements Parcelable {
         caSi = in.readString();
         linkBaiHat = in.readString();
         luotThich = in.readString();
+    }
+
+    public Baihat(String tenBaiHat,String linkBaiHat, String id, String image, String caSi){
+        this.tenBaiHat = tenBaiHat;
+        this.linkBaiHat = linkBaiHat;
+        this.idBaiHat = id;
+        this.hinhBaiHat = image;
+        this.caSi = caSi;
     }
 
     public static final Creator<Baihat> CREATOR = new Creator<Baihat>() {

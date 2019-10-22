@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.hongchen.Activity.MainActivity;
 import com.example.hongchen.Activity.PlayActivity;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
@@ -19,10 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class DexuatAdapter extends RecyclerView.Adapter<DexuatAdapter.ViewHolder>{
 
     Context context;
     ArrayList<Baihat> baihatArrayList;
+    private final int limit = 10;
 
     public DexuatAdapter(Context context, ArrayList<Baihat> baihatArrayList) {
         this.context = context;
@@ -40,13 +40,22 @@ public class DexuatAdapter extends RecyclerView.Adapter<DexuatAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Baihat baihat = baihatArrayList.get(position);
-        Picasso.with(context).load(baihat.getHinhBaiHat()).into(holder.imageviewdexuat);
+        Picasso.get().load(baihat.getHinhBaiHat()).into(holder.imageviewdexuat);
         holder.textviewdexuat.setText(baihat.getTenBaiHat());
     }
 
     @Override
     public int getItemCount() {
-        return baihatArrayList.size();
+        if(baihatArrayList.size() > limit){
+            return limit;
+        }
+        else if (baihatArrayList==null){
+            return 0;
+        }
+        else
+        {
+            return baihatArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

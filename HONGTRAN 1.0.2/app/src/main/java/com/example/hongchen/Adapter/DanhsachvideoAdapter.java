@@ -8,17 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Activity.PlayvideoActivity;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.example.hongchen.Activity.PlayActivity.baihatArrayList;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DanhsachvideoAdapter extends RecyclerView.Adapter<DanhsachvideoAdapter.ViewHolder>{
 
@@ -40,14 +37,20 @@ public class DanhsachvideoAdapter extends RecyclerView.Adapter<DanhsachvideoAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Video video = videoArrayList.get(position);
-        Picasso.with(context).load(video.getHinhVideo()).into(holder.imageviewdanhsachvideo);
-        holder.textviewdanhsachvideo.setText(video.getTenVideo());
+//        Video video = videoArrayList.get(position);
+//        Picasso.get().load(video.getHinhVideo()).into(holder.imageviewdanhsachvideo);
+//        holder.textviewdanhsachvideo.setText(video.getTenVideo());
     }
+
 
     @Override
     public int getItemCount() {
-        return videoArrayList.size();
+        if (videoArrayList == null){
+            return 0;
+        }
+        else {
+            return videoArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

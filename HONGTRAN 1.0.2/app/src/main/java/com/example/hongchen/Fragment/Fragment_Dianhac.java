@@ -37,6 +37,6 @@ public class Fragment_Dianhac extends Fragment {
     }
 
     public void Playnhac(String hinhanh) {
-        Picasso.with(getActivity()).load(hinhanh).into(imageviewcircle);
+        Picasso.get().load(hinhanh).into(imageviewcircle);
     }
 }

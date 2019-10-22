@@ -15,10 +15,21 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/edittextusername_register"
+        android:id="@+id/edittextemail_register"
         android:layout_below="@id/toolbarregister"
         android:hint="Nhập email"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </EditText>
+
+    <EditText
+        android:id="@+id/edittextusername_register"
+        android:layout_below="@id/edittextemail_register"
+        android:hint="Nhập tên tài khoản"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"

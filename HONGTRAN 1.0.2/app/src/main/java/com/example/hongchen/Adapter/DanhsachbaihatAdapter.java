@@ -8,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.hongchen.Activity.MainActivity;
 import com.example.hongchen.Activity.PlayActivity;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DanhsachbaihatAdapter extends RecyclerView.Adapter<DanhsachbaihatAdapter.ViewHolder>{
 
@@ -45,7 +44,12 @@ public class DanhsachbaihatAdapter extends RecyclerView.Adapter<DanhsachbaihatAd
 
     @Override
     public int getItemCount() {
-        return baihatArrayList.size();
+        if (baihatArrayList == null){
+            return 0;
+        }
+        else {
+            return baihatArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

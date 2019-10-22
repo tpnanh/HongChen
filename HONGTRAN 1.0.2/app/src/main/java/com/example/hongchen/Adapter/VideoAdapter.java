@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Activity.PlayvideoActivity;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder>{
 
@@ -39,13 +39,18 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Video video = videoArrayList.get(position);
-        Picasso.with(context).load(video.getHinhVideo()).into(holder.imagevideo);
+        Picasso.get().load(video.getHinhVideo()).into(holder.imagevideo);
         holder.textviewvideo.setText(video.getTenVideo());
     }
 
     @Override
     public int getItemCount() {
-        return videoArrayList.size();
+        if (videoArrayList == null){
+            return 0;
+        }
+        else {
+            return videoArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,5 +71,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder>{
                 }
             });
         }
+    }
+
+    public void setData(ArrayList<Video> data) {
+        this.videoArrayList = data;
+        notifyDataSetChanged();
     }
 }

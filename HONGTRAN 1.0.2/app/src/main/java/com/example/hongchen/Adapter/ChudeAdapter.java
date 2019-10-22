@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.hongchen.Model.ChuDe;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ChudeAdapter extends ArrayAdapter<ChuDe> {
 
@@ -23,7 +23,7 @@ public class ChudeAdapter extends ArrayAdapter<ChuDe> {
         super(context, resource, objects);
     }
 
-    class ViewHolder{
+    class ViewHolder {
         TextView textviewchude;
         ImageView imagechude;
     }
@@ -34,7 +34,7 @@ public class ChudeAdapter extends ArrayAdapter<ChuDe> {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.dong_chude,null);
+            convertView = inflater.inflate(R.layout.dong_chude, null);
             viewHolder = new ChudeAdapter.ViewHolder();
             viewHolder.textviewchude = convertView.findViewById(R.id.textviewtenchude);
             viewHolder.imagechude = convertView.findViewById(R.id.imagechude);
@@ -44,8 +44,9 @@ public class ChudeAdapter extends ArrayAdapter<ChuDe> {
         }
 
         ChuDe chude = getItem(position);
-        Picasso.with(getContext()).load(chude.getHinhChuDe()).into(viewHolder.imagechude);
+        Picasso.get().load(chude.getHinhChuDe()).into(viewHolder.imagechude);
         viewHolder.textviewchude.setText(chude.getTenChuDe());
         return convertView;
     }
+
 }

@@ -1,10 +1,10 @@
 package com.example.hongchen.Adapter;
 
+import java.util.ArrayList;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import java.util.ArrayList;
 
 public class ViewPagerPlaylistnhac extends FragmentPagerAdapter {
 
@@ -21,7 +21,12 @@ public class ViewPagerPlaylistnhac extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return fragmentArrayList.size();
+        if (fragmentArrayList == null){
+            return 0;
+        }
+        else {
+            return fragmentArrayList.size();
+        }
     }
 
     public void AddFragment(Fragment fragment) {

@@ -7,14 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Model.Ost;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DanhsachostAdapter extends RecyclerView.Adapter<DanhsachostAdapter.ViewHolder>{
     Context context;
@@ -36,13 +36,18 @@ public class DanhsachostAdapter extends RecyclerView.Adapter<DanhsachostAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ost ost = ostArrayList.get(position);
-        Picasso.with(context).load(ost.getHinhOst()).into(holder.imagedanhsachost);
+        Picasso.get().load(ost.getHinhOst()).into(holder.imagedanhsachost);
         holder.textviewdanhsachost.setText(ost.getTenOst());
     }
 
     @Override
     public int getItemCount() {
-        return ostArrayList.size();
+        if (ostArrayList == null){
+            return 0;
+        }
+        else {
+            return ostArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

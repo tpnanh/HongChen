@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 public class Video implements Parcelable {
 
     @SerializedName("IdVideo")
@@ -32,6 +30,11 @@ public class Video implements Parcelable {
         hinhVideo = in.readString();
         linkVideo = in.readString();
         tacGia = in.readString();
+    }
+
+    public Video(String tenBaiHat, String linkBaiHat){
+        this.tenVideo = tenBaiHat;
+        this.linkVideo = linkBaiHat;
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {

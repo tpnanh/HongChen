@@ -1,9 +1,5 @@
 package com.example.hongchen.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -21,18 +17,30 @@ import com.example.hongchen.Fragment.Fragment_Dianhac;
 import com.example.hongchen.Fragment.Fragment_Play_Danhsachbaihat;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 public class PlayActivity extends AppCompatActivity {
 
     Toolbar toolbarplaynhac;
     TextView textview_time_song, textview_time_total;
     SeekBar seekbar_song;
-    ImageButton imagebuttonshuffle, imagebuttonprevious, imagebuttonplay, imagebuttonnext, imagebuttonrepeat;
+    ImageButton imagelovebutton, imagebuttonprevious, imagebuttonplay, imagebuttonnext, imagebuttonshuffle;
     ViewPager viewpagerplaynhac;
     Fragment_Play_Danhsachbaihat fragment_play_danhsachbaihat;
     Fragment_Dianhac fragment_dianhac;
@@ -40,9 +48,14 @@ public class PlayActivity extends AppCompatActivity {
     public static ArrayList<Baihat> baihatArrayList = new ArrayList<>();
     private static ViewPagerPlaylistnhac adapterplaynhac;
     int position = 0;
-    boolean repeat = false;
-    boolean checkrandom = false;
+    String repeat = "1";
+    boolean lovebutton = false;
     boolean checknext = false;
+
+    String url,id;
+
+    DatabaseReference loveRef;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +63,16 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        mAuth = FirebaseAuth.getInstance();
+        loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
+
         GetDataFromIntent();
         init();
         eventClick();
+
+        url = baihatArrayList.get(0).getLinkBaiHat();
+
     }
 
     private void eventClick() {
@@ -88,37 +108,37 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
-        imagebuttonrepeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (repeat == false) {
-                    if (checkrandom == true) {
-                        checkrandom = false;
-                        imagebuttonrepeat.setImageResource(R.drawable.repeat);
-                        imagebuttonshuffle.setImageResource(R.drawable.shufflesyned);
-                    }
-                    imagebuttonrepeat.setImageResource(R.drawable.repeat);
-                    repeat = true;
-                } else {
-                    imagebuttonrepeat.setImageResource(R.drawable.syned);
-                    repeat = false;
-                }
-            }
-        });
         imagebuttonshuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkrandom == false) {
-                    if (repeat == true) {
-                        repeat = false;
-                        imagebuttonshuffle.setImageResource(R.drawable.shuffle);
-                        imagebuttonrepeat.setImageResource(R.drawable.syned);
-                    }
+                if (repeat.equals("1")){
+                    repeat="2";
                     imagebuttonshuffle.setImageResource(R.drawable.shuffle);
-                    checkrandom = true;
-                } else {
+                }
+                else if (repeat.equals("2")){
+                    repeat="3";
+                    imagebuttonshuffle.setImageResource(R.drawable.syned);
+                }
+                else if (repeat.equals("3")){
+                    repeat="4";
+                    imagebuttonshuffle.setImageResource(R.drawable.repeat);
+                }
+                else if (repeat.equals("4")){
+                    repeat="1";
                     imagebuttonshuffle.setImageResource(R.drawable.shufflesyned);
-                    checkrandom = false;
+                }
+            }
+        });
+        imagelovebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lovebutton == false) {
+                    lovebutton = true;
+                    imagelovebutton.setImageResource(R.drawable.love);
+                }
+                else {
+                    lovebutton = false;
+                    imagelovebutton.setImageResource(R.drawable.nolove);
                 }
             }
         });
@@ -152,13 +172,13 @@ public class PlayActivity extends AppCompatActivity {
                     if (position < baihatArrayList.size()) {
                         imagebuttonplay.setImageResource(R.drawable.pause);
                         position++;
-                        if (repeat == true) {
+                        if (repeat == "2") {
                             if (position == 0) {
                                 position = baihatArrayList.size();
                             }
                             position -= 1;
                         }
-                        if (checkrandom == true) {
+                        if (repeat == "4") {
                             Random random = new Random();
                             int index = random.nextInt(baihatArrayList.size());
                             if (index == position) {
@@ -205,10 +225,10 @@ public class PlayActivity extends AppCompatActivity {
                             position = baihatArrayList.size() - 1;
                         }
 
-                        if (repeat == true) {
+                        if (repeat == "2") {
                             position += 1;
                         }
-                        if (checkrandom == true) {
+                        if (repeat == "4") {
                             Random random = new Random();
                             int index = random.nextInt(baihatArrayList.size());
                             if (index == position) {
@@ -251,6 +271,19 @@ public class PlayActivity extends AppCompatActivity {
                 ArrayList<Baihat> ArrayListbaihat = intent.getParcelableArrayListExtra("allbaihat");
                 baihatArrayList = ArrayListbaihat;
             }
+
+            if (intent.hasExtra("MucYeuThichItem")){
+
+                String tenBaiHat = intent.getStringExtra("tenBaiHat");
+                String linkBaiHat = intent.getStringExtra("linkBaiHat");
+                String idBaiHat = intent.getStringExtra("id");
+                String image = intent.getStringExtra("image");
+                String caSi = intent.getStringExtra("caSi");
+
+                Baihat baihat = new Baihat(tenBaiHat, linkBaiHat, idBaiHat, image, caSi);
+                baihatArrayList.add(baihat);
+            }
+
         }
     }
 
@@ -259,11 +292,11 @@ public class PlayActivity extends AppCompatActivity {
         textview_time_song      = findViewById(R.id.textview_time_song);
         textview_time_total     = findViewById(R.id.textview_time_total);
         seekbar_song            = findViewById(R.id.seekbar_song);
-        imagebuttonshuffle      = findViewById(R.id.imagebuttonshuffle);
+        imagelovebutton         = findViewById(R.id.imagebuttonlove);
         imagebuttonnext         = findViewById(R.id.imagebuttonnext);
         imagebuttonplay         = findViewById(R.id.imagebuttonplay);
         imagebuttonprevious     = findViewById(R.id.imagebuttonpreview);
-        imagebuttonrepeat       = findViewById(R.id.imagebuttonrepeat);
+        imagebuttonshuffle      = findViewById(R.id.imagebuttonshuffle);
         viewpagerplaynhac       = findViewById(R.id.viewpagerplaynhac);
         setSupportActionBar(toolbarplaynhac);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -272,7 +305,7 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
                 mediaPlayer.stop();
-                baihatArrayList.clear();
+
             }
         });
         adapterplaynhac = new ViewPagerPlaylistnhac(getSupportFragmentManager());
@@ -287,6 +320,27 @@ public class PlayActivity extends AppCompatActivity {
             new Playmp3().execute(baihatArrayList.get(0).getLinkBaiHat());
             imagebuttonplay.setImageResource(R.drawable.pause);
         }
+        getLoadData();
+    }
+
+    private void getLoadData() {
+        id = baihatArrayList.get(0).getIdBaiHat(); ;
+        loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    imagelovebutton.setImageResource(R.drawable.love);
+                    lovebutton = true;
+                }else{
+                    lovebutton = false;
+                    imagelovebutton.setImageResource(R.drawable.nolove);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     class Playmp3 extends AsyncTask<String,Void,String> {
@@ -359,50 +413,100 @@ public class PlayActivity extends AppCompatActivity {
         handler1.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (checknext == true) {
+            if (checknext == true) {
 
-                    if (position < baihatArrayList.size()) {
-                        imagebuttonplay.setImageResource(R.drawable.pause);
-                        position++;
-                        if (repeat == true) {
-                            if (position == 0) {
-                                position = baihatArrayList.size();
-                            }
-                            position -= 1;
+                if (position < baihatArrayList.size()) {
+                    imagebuttonplay.setImageResource(R.drawable.pause);
+                    position++;
+                    if (repeat == "2") {
+                        if (position == 0) {
+                            position = baihatArrayList.size();
                         }
-                        if (checkrandom == true) {
-                            Random random = new Random();
-                            int index = random.nextInt(baihatArrayList.size());
-                            if (index == position) {
-                                position = index - 1;
-                            }
-                            position = index;
-                        }
-                        if (position > (baihatArrayList.size()-1)) {
-                            position = 0;
-                        }
-                        new Playmp3().execute(baihatArrayList.get(position).getLinkBaiHat());
-                        fragment_dianhac.Playnhac(baihatArrayList.get(position).getHinhBaiHat());
-                        getSupportActionBar().setTitle(baihatArrayList.get(position).getTenBaiHat());
+                        position -= 1;
                     }
-
-                    imagebuttonprevious.setClickable(false);
-                    imagebuttonnext.setClickable(false);
-                    Handler handler1 = new Handler();
-                    handler1.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            imagebuttonprevious.setClickable(true);
-                            imagebuttonnext.setClickable(true);
+                    if (repeat == "4") {
+                        Random random = new Random();
+                        int index = random.nextInt(baihatArrayList.size());
+                        if (index == position) {
+                            position = index - 1;
                         }
-                    },5000);
-                    checknext = false;
-                    handler1.removeCallbacks(this);
-
-                } else {
-                    handler1.postDelayed(this,1000);
+                        position = index;
+                    }
+                    if (position > (baihatArrayList.size()-1)) {
+                        position = 0;
+                    }
+                    new Playmp3().execute(baihatArrayList.get(position).getLinkBaiHat());
+                    fragment_dianhac.Playnhac(baihatArrayList.get(position).getHinhBaiHat());
+                    getSupportActionBar().setTitle(baihatArrayList.get(position).getTenBaiHat());
                 }
+
+                imagebuttonprevious.setClickable(false);
+                imagebuttonnext.setClickable(false);
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        imagebuttonprevious.setClickable(true);
+                        imagebuttonnext.setClickable(true);
+                    }
+                },5000);
+                checknext = false;
+                handler1.removeCallbacks(this);
+
+            } else {
+                handler1.postDelayed(this,1000);
+            }
             }
         },1000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (lovebutton==false){
+                    if (dataSnapshot.exists()){
+                        loveRef.child(id).removeValue();
+                    }
+                }
+                else{
+                    HashMap<String,Object> hashmap = new HashMap<>();
+                    if (!dataSnapshot.exists()){
+                        hashmap.put("Id",id);
+                        hashmap.put("Url",baihatArrayList.get(0).getLinkBaiHat());
+                        hashmap.put("Name",baihatArrayList.get(0).getTenBaiHat());
+                        hashmap.put("Type","Song");
+                        hashmap.put("Image",baihatArrayList.get(0).getHinhBaiHat());
+                        hashmap.put("TacGia",baihatArrayList.get(0).getCaSi());
+
+                    }
+                    else{
+
+                    }
+                    loveRef.child(id).updateChildren(hashmap);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+
+
     }
 }

@@ -1,20 +1,18 @@
 package com.example.hongchen.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.hongchen.Activity.PlayActivity;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
@@ -43,7 +41,12 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return baihatArrayList.size();
+        if (baihatArrayList == null){
+            return 0;
+        }
+        else {
+            return baihatArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -7,23 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatCallback;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hongchen.Activity.DanhsachbaihatActivity;
-import com.example.hongchen.Activity.HomePage;
-import com.example.hongchen.Fragment.Fragment_PhoBien;
 import com.example.hongchen.Model.Playlist;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class PhobienAdapter extends RecyclerView.Adapter<PhobienAdapter.ViewHolder>{
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class PhobienAdapter extends RecyclerView.Adapter<PhobienAdapter.ViewHolder> {
     Context context;
     ArrayList<Playlist> playlistArrayList;
 
@@ -36,7 +31,7 @@ public class PhobienAdapter extends RecyclerView.Adapter<PhobienAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dong_phobien,parent,false);
+        View view = inflater.inflate(R.layout.dong_phobien, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +48,7 @@ public class PhobienAdapter extends RecyclerView.Adapter<PhobienAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DanhsachbaihatActivity.class);
-                    intent.putExtra("itemplaylist",playlistArrayList.get(getPosition()));
+                    intent.putExtra("itemplaylist", playlistArrayList.get(getPosition()));
                     context.startActivity(intent);
                 }
             });
@@ -62,14 +57,23 @@ public class PhobienAdapter extends RecyclerView.Adapter<PhobienAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return playlistArrayList.size();
+        if (playlistArrayList == null){
+            return 0;
+        }
+        else {
+            return playlistArrayList.size();
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Playlist playlist = playlistArrayList.get(position);
-        Picasso.with(context).load(playlist.getHinhNen()).into(holder.imageplaylistphobien);
+        Picasso.get().load(playlist.getHinhNen()).into(holder.imageplaylistphobien);
         holder.textviewplaylistphobien.setText(playlist.getTen());
     }
 
+    public void setData(ArrayList<Playlist> data) {
+        this.playlistArrayList = data;
+        notifyDataSetChanged();
+    }
 }

@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Activity.PlayActivity;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchbaihatAdapter extends RecyclerView.Adapter<SearchbaihatAdapter.ViewHolder>{
 
@@ -41,12 +41,17 @@ public class SearchbaihatAdapter extends RecyclerView.Adapter<SearchbaihatAdapte
         Baihat baihat = baihatArrayList.get(position);
         holder.textviewsearchbaihattenbaihat.setText(baihat.getTenBaiHat());
         holder.textviewsearchbaihattencasi.setText(baihat.getCaSi());
-        Picasso.with(context).load(baihat.getHinhBaiHat()).into(holder.imageviewsearchbaihat);
+        Picasso.get().load(baihat.getHinhBaiHat()).into(holder.imageviewsearchbaihat);
     }
 
     @Override
     public int getItemCount() {
-        return baihatArrayList.size();
+        if (baihatArrayList == null){
+            return 0;
+        }
+        else {
+            return baihatArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

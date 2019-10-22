@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Activity.DanhsachbaihatActivity;
 import com.example.hongchen.Model.Playlist;
 import com.example.hongchen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DanhsachcacplaylistAdapter extends RecyclerView.Adapter<DanhsachcacplaylistAdapter.ViewHolder>{
 
@@ -39,13 +39,18 @@ public class DanhsachcacplaylistAdapter extends RecyclerView.Adapter<Danhsachcac
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Playlist playlist = playlistArrayList.get(position);
-        Picasso.with(context).load(playlist.getHinhNen()).into(holder.imageviewplaylist);
+        Picasso.get().load(playlist.getHinhNen()).into(holder.imageviewplaylist);
         holder.textviewplaylist.setText(playlist.getTen());
     }
 
     @Override
     public int getItemCount() {
-        return playlistArrayList.size();
+        if (playlistArrayList == null){
+            return 0;
+        }
+        else {
+            return playlistArrayList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

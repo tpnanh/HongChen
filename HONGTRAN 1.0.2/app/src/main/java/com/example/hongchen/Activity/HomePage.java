@@ -1,33 +1,27 @@
 package com.example.hongchen.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ViewFlipper;
 
 import com.example.hongchen.Adapter.MainViewPagerAdapter;
 import com.example.hongchen.Fragment.Fragment_Account;
 import com.example.hongchen.Fragment.Fragment_HomePage;
 import com.example.hongchen.Fragment.Fragment_Profile;
-import com.example.hongchen.Fragment.Fragment_Search;
 import com.example.hongchen.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 public class HomePage extends AppCompatActivity {
 
     ViewPager viewPager;
     TabLayout tabLayout;
     private FirebaseAuth mAuth;
+
+    //ArrayList<String>imagesUri=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +29,12 @@ public class HomePage extends AppCompatActivity {
 
         anhxa();
 
-
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null){
             initLater();
         }else{
             init();
         }
-
     }
 
     @Override
@@ -70,8 +62,12 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void anhxa() {
-
         viewPager = findViewById(R.id.myViewPager);
         tabLayout = findViewById(R.id.myTabLayout);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

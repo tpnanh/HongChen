@@ -7,14 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.hongchen.Adapter.VideoAdapter;
 import com.example.hongchen.Activity.DanhsachvideoActivity;
+import com.example.hongchen.Adapter.VideoAdapter;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -23,6 +17,11 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +36,8 @@ public class Fragment_Video extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_video,container,false);
+        view = inflater.inflate(R.layout.fragment_video, container, false);
+        videoAdapter = new VideoAdapter(getActivity(), new ArrayList<Video>());
         recyclerviewvideo = view.findViewById(R.id.listviewvideo);
         textviewvideo = view.findViewById(R.id.textviewvideo);
         getData();
@@ -58,8 +58,8 @@ public class Fragment_Video extends Fragment {
             @Override
             public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
                 videoArrayList = (ArrayList<Video>) response.body();
-                videoAdapter = new VideoAdapter(getActivity(),videoArrayList);
-                recyclerviewvideo.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                videoAdapter.setData(videoArrayList);
+                recyclerviewvideo.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 recyclerviewvideo.setAdapter(videoAdapter);
             }
 

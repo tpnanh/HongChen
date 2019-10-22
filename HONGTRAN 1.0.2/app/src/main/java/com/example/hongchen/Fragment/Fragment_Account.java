@@ -1,45 +1,30 @@
 package com.example.hongchen.Fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
-
 import com.example.hongchen.Activity.ForgetPasswordActivity;
 import com.example.hongchen.Activity.HomePage;
-import com.example.hongchen.Activity.MainActivity;
 import com.example.hongchen.Activity.RegisterActivity;
-import com.example.hongchen.Adapter.MainViewPagerAdapter;
 import com.example.hongchen.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.example.hongchen.Model.User;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class Fragment_Account extends Fragment {
     View view;
@@ -58,6 +43,8 @@ public class Fragment_Account extends Fragment {
         return new Fragment_Account();
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,7 +52,6 @@ public class Fragment_Account extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
        // userRef = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
-
 
         etUserName = view.findViewById(R.id.edittextusername_login);
         etPassword = view.findViewById(R.id.edittextpassword_login);
@@ -136,5 +122,13 @@ public class Fragment_Account extends Fragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -46,7 +46,7 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
         }
 
         Playlist playlist = getItem(position);
-        Picasso.with(getContext()).load(playlist.getHinhNen()).into(viewHolder.imageplaylist);
+        Picasso.get().load(playlist.getHinhNen()).into(viewHolder.imageplaylist);
         viewHolder.textviewplaylist.setText(playlist.getTen());
 
         return convertView;
