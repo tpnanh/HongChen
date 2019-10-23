@@ -7,15 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hongchen.Adapter.DexuatAdapter;
-
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -24,6 +17,11 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,10 +37,15 @@ public class Fragment_DeXuat extends Fragment {
     boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
 
+    private Dialog dialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dexuat,container,false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         listviewdexuat = view.findViewById(R.id.listviewdexuat);
         textviewdexuat = view.findViewById(R.id.textviewtitledexuat);
         layoutManager = new GridLayoutManager(getActivity(),1);
@@ -81,6 +84,8 @@ public class Fragment_DeXuat extends Fragment {
                 listviewdexuat.setLayoutManager(new GridLayoutManager(getActivity(),1));
                 listviewdexuat.setAdapter(dexuatAdapter);
 //                setListViewHeightBasedOnChildren(listviewdexuat);
+
+                dialog.dismiss();
             }
 
             @Override

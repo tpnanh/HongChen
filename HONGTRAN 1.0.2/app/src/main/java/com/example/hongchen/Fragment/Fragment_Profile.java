@@ -1,6 +1,7 @@
 package com.example.hongchen.Fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -50,6 +51,8 @@ public class Fragment_Profile extends Fragment {
 
     private StorageReference storageProfilePictureRef;
     private StorageTask uploadTask;
+
+    private Dialog dialog;
 
     public static Fragment_Profile newInstance() {
         return new Fragment_Profile();

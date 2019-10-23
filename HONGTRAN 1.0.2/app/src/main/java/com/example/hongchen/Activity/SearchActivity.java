@@ -1,29 +1,17 @@
 package com.example.hongchen.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hongchen.Adapter.SearchbaihatAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Baihat;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -32,6 +20,10 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,16 +38,26 @@ public class SearchActivity extends AppCompatActivity {
     ImageView imageviewsearch;
     SearchbaihatAdapter searchbaihatAdapter;
 
+    private Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         DataIntent();
         anhxa();
+
+        dialog = new Dialog(this);
+
         imageviewsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
                 if(!edittextsearch.getText().toString().isEmpty()) {
+
+                    dialog.show();
                     String tukhoa = edittextsearch.getText().toString();
                     SearchTukhoaBaihat(tukhoa);
                 } else {
@@ -108,6 +110,8 @@ public class SearchActivity extends AppCompatActivity {
                     textviewkhongdulieu.setVisibility(View.VISIBLE);
                     recyclerviewsearchbaihat.setVisibility(View.GONE);
                 }
+
+                dialog.dismiss();
             }
 
             @Override

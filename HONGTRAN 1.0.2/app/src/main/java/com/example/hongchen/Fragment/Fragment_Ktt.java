@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.hongchen.Activity.DanhsachkttActivity;
 import com.example.hongchen.Adapter.KttAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Kichtruyenthanh;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -33,10 +34,16 @@ public class Fragment_Ktt extends Fragment {
     KttAdapter kttAdapter;
     ArrayList<Kichtruyenthanh> kichtruyenthanhArrayList;
 
+    private Dialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_kichtruyenthanh, container, false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         kttAdapter = new KttAdapter(getContext(), new ArrayList<Kichtruyenthanh>());
         recyclerviewktt = view.findViewById(R.id.listviewktt);
         textviewktt = view.findViewById(R.id.textviewktt);
@@ -61,6 +68,8 @@ public class Fragment_Ktt extends Fragment {
                 kttAdapter.setData(kichtruyenthanhArrayList);
                 recyclerviewktt.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 recyclerviewktt.setAdapter(kttAdapter);
+
+                dialog.dismiss();
             }
 
             @Override

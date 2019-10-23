@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hongchen.Adapter.BannerAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Quangcao;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -33,9 +34,14 @@ public class Fragment_Banner extends Fragment {
     Handler handler;
     int currentItem;
 
+    private Dialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         view = inflater.inflate(R.layout.fragment_banner, container, false);
         anhxa();
         getData();
@@ -55,6 +61,8 @@ public class Fragment_Banner extends Fragment {
                 ArrayList<Quangcao> banners = (ArrayList<Quangcao>) response.body();
                 bannerAdapter.setData(banners);//crash roi
 
+                dialog.dismiss();
+
                 handler = new Handler();
                 runnable = new Runnable() {
                     @Override
@@ -71,6 +79,7 @@ public class Fragment_Banner extends Fragment {
                 };
 
                 handler.postDelayed(runnable, 10000); // delay chi vay
+
 
             }
 

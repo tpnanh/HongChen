@@ -1,14 +1,10 @@
 package com.example.hongchen.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.hongchen.Adapter.DanhsachcacplaylistAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Playlist;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -17,6 +13,10 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,11 +26,16 @@ public class DanhsachcacplaylistActivity extends AppCompatActivity {
     Toolbar toolbardanhsachcacplaylist;
     RecyclerView recyclerviewdanhsachcacplaylist;
     DanhsachcacplaylistAdapter danhsachcacplaylistAdapter;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danhsachcacplaylist);
+
+        dialog = new Dialog(this);
+        dialog.show();
+
         anhxa();
         init();
         getData();
@@ -46,6 +51,7 @@ public class DanhsachcacplaylistActivity extends AppCompatActivity {
                 danhsachcacplaylistAdapter = new DanhsachcacplaylistAdapter(DanhsachcacplaylistActivity.this,playlistArrayList);
                 recyclerviewdanhsachcacplaylist.setLayoutManager(new GridLayoutManager(DanhsachcacplaylistActivity.this,3));
                 recyclerviewdanhsachcacplaylist.setAdapter(danhsachcacplaylistAdapter);
+                dialog.dismiss();
             }
 
             @Override

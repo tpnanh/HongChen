@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.hongchen.Adapter.ViewPagerPlaylistnhac;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Fragment.Fragment_Dianhac;
 import com.example.hongchen.Fragment.Fragment_Play_Danhsachbaihat;
 import com.example.hongchen.Model.Baihat;
@@ -54,6 +55,8 @@ public class PlayActivity extends AppCompatActivity {
 
     String url,id;
 
+    private Dialog dialog;
+
     DatabaseReference loveRef;
     FirebaseAuth mAuth;
 
@@ -63,6 +66,9 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        dialog = new Dialog(this);
+        dialog.show();
 
         mAuth = FirebaseAuth.getInstance();
         loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
@@ -256,6 +262,8 @@ public class PlayActivity extends AppCompatActivity {
                 },5000);
             }
         });
+
+
     }
 
     private void GetDataFromIntent() {
@@ -370,6 +378,7 @@ public class PlayActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             mediaPlayer.start();
+            dialog.dismiss();
             TimeSong();
             UpdateTimeSong();
         }

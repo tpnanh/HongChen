@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hongchen.Adapter.ChudeAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.ChuDe;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -32,10 +33,16 @@ public class Fragment_ChuDe extends Fragment {
     ChudeAdapter chudeAdapter;
     ArrayList<ChuDe> chuDeArrayList;
 
+    private Dialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chude, container, false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         listviewchude = view.findViewById(R.id.listviewpchude);
         textviewchude = view.findViewById(R.id.textviewtitlechude);
         getData();
@@ -52,6 +59,8 @@ public class Fragment_ChuDe extends Fragment {
                 chudeAdapter = new ChudeAdapter(getContext(), android.R.layout.simple_list_item_1, chuDeArrayList);
                 listviewchude.setAdapter(chudeAdapter);
                 setListViewHeightBasedOnChildren(listviewchude);
+
+                dialog.dismiss();
             }
 
             @Override

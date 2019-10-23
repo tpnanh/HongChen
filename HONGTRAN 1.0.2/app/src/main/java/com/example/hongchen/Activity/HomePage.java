@@ -22,10 +22,12 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     //ArrayList<String>imagesUri=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+
 
         anhxa();
 
@@ -51,6 +53,8 @@ public class HomePage extends AppCompatActivity {
         mainViewPagerAdapter.addFragment(new Fragment_Account(),"CÁ NHÂN");
         viewPager.setAdapter(mainViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     public void initLater() {
@@ -59,6 +63,8 @@ public class HomePage extends AppCompatActivity {
         mainViewPagerAdapter.addFragment(new Fragment_Profile(),"CÁ NHÂN");
         viewPager.setAdapter(mainViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     public void anhxa() {

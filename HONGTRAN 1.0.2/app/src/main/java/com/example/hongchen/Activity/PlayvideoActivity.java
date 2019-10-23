@@ -1,6 +1,7 @@
 package com.example.hongchen.Activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,10 +42,15 @@ public class PlayvideoActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private boolean checkIB = true;
 
+    private Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playvideo);
+
+        dialog = new Dialog(this);
+        dialog.show();
 
         mAuth = FirebaseAuth.getInstance();
         loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
@@ -136,8 +143,17 @@ public class PlayvideoActivity extends AppCompatActivity {
             videoview.setMediaController(mediaController);
             mediaController.setAnchorView(videoview);
             videoview.start();
+
+            videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    dialog.dismiss();
+                }
+            });
+
         } catch (Exception e) {}
     }
+
 
     @Override
     protected void onPause() {
@@ -173,14 +189,5 @@ public class PlayvideoActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
 }

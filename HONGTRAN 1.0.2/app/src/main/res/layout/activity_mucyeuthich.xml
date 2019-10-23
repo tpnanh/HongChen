@@ -14,12 +14,22 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewmucyeuthich"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/switch_refresh"
         android:layout_below="@id/toolbarmucyeuthich"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewmucyeuthich"
+            android:layout_below="@id/toolbarmucyeuthich"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 </RelativeLayout>

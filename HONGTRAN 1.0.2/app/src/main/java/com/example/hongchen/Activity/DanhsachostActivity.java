@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hongchen.Adapter.DanhsachostAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Ost;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -25,10 +26,16 @@ public class DanhsachostActivity extends AppCompatActivity {
     RecyclerView recyclerviewdanhsachost;
     DanhsachostAdapter danhsachostAdapter;
 
+    private Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danhsachost);
+
+        dialog = new Dialog(this);
+        dialog.show();
+
         anhxa();
         init();
         getData();
@@ -44,6 +51,7 @@ public class DanhsachostActivity extends AppCompatActivity {
                 danhsachostAdapter = new DanhsachostAdapter(DanhsachostActivity.this,ostArrayList);
                 recyclerviewdanhsachost.setLayoutManager(new GridLayoutManager(DanhsachostActivity.this,1));
                 recyclerviewdanhsachost.setAdapter(danhsachostAdapter);
+                dialog.dismiss();
             }
 
             @Override

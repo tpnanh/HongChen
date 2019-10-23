@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hongchen.Adapter.DanhsachvideoAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -25,10 +26,16 @@ public class DanhsachvideoActivity extends AppCompatActivity {
     RecyclerView recyclerviewdanhsachvideo;
     DanhsachvideoAdapter danhsachvideoAdapter;
 
+    private Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danhsachvideo);
+
+        dialog = new Dialog(this);
+        dialog.show();
+
         anhxa();
         init();
         getData();
@@ -44,6 +51,7 @@ public class DanhsachvideoActivity extends AppCompatActivity {
                 danhsachvideoAdapter = new DanhsachvideoAdapter(DanhsachvideoActivity.this,videoArrayList);
                 recyclerviewdanhsachvideo.setLayoutManager(new GridLayoutManager(DanhsachvideoActivity.this,2));
                 recyclerviewdanhsachvideo.setAdapter(danhsachvideoAdapter);
+                dialog.dismiss();
             }
 
             @Override

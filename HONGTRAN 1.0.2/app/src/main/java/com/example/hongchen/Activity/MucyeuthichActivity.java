@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hongchen.Adapter.MucyeuthichAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.YeuThich;
 import com.example.hongchen.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MucyeuthichActivity extends AppCompatActivity {
     Toolbar toolbarmucyeuthich;
@@ -32,11 +34,18 @@ public class MucyeuthichActivity extends AppCompatActivity {
 
     private ArrayList<YeuThich> data;
 
+    private Dialog dialog;
+
     private boolean pause = false;
+
+    private SwipeRefreshLayout viewSwitcher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mucyeuthich);
+
+        dialog = new Dialog(this);
+        dialog.show();
 
         mAuth = FirebaseAuth.getInstance();
         yeuThichRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
@@ -48,6 +57,14 @@ public class MucyeuthichActivity extends AppCompatActivity {
     }
 
     private void init() {
+        viewSwitcher = findViewById(R.id.switch_refresh);
+        viewSwitcher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                data.clear();
+                loadData();
+            }
+        });
         setSupportActionBar(toolbarmucyeuthich);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("BÀI HÁT YÊU THÍCH");
@@ -110,8 +127,10 @@ public class MucyeuthichActivity extends AppCompatActivity {
     }
 
     public void setAdapter(){
+        viewSwitcher.setRefreshing(false);
         adapter = new MucyeuthichAdapter(MucyeuthichActivity.this, data);
         recyclerviewmucyeuthich.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewmucyeuthich.setAdapter(adapter);
+        dialog.dismiss();
     }
 }

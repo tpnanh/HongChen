@@ -5,19 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hongchen.Activity.DanhsachostActivity;
 import com.example.hongchen.Adapter.OstAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Ost;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -26,6 +18,11 @@ import com.example.hongchen.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,10 +34,16 @@ public class Fragment_Ost extends Fragment {
     OstAdapter ostAdapter;
     ArrayList<Ost> ostArrayList;
 
+    private Dialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_ost,container,false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         recyclerviewost = view.findViewById(R.id.listviewost);
         textviewost = view.findViewById(R.id.textviewost);
         getData();
@@ -64,6 +67,8 @@ public class Fragment_Ost extends Fragment {
                 ostAdapter = new OstAdapter(getActivity(),ostArrayList);
                 recyclerviewost.setLayoutManager(new GridLayoutManager(getActivity(),2));
                 recyclerviewost.setAdapter(ostAdapter);
+
+                dialog.dismiss();
             }
 
             @Override

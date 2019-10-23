@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.hongchen.Activity.DanhsachvideoActivity;
 import com.example.hongchen.Adapter.VideoAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Video;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -33,10 +34,16 @@ public class Fragment_Video extends Fragment {
     VideoAdapter videoAdapter;
     ArrayList<Video> videoArrayList;
 
+    private Dialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_video, container, false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         videoAdapter = new VideoAdapter(getActivity(), new ArrayList<Video>());
         recyclerviewvideo = view.findViewById(R.id.listviewvideo);
         textviewvideo = view.findViewById(R.id.textviewvideo);
@@ -61,6 +68,8 @@ public class Fragment_Video extends Fragment {
                 videoAdapter.setData(videoArrayList);
                 recyclerviewvideo.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 recyclerviewvideo.setAdapter(videoAdapter);
+
+                dialog.dismiss();
             }
 
             @Override

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.hongchen.Activity.DanhsachcacplaylistActivity;
 import com.example.hongchen.Adapter.PhobienAdapter;
+import com.example.hongchen.Dialog.Dialog;
 import com.example.hongchen.Model.Playlist;
 import com.example.hongchen.R;
 import com.example.hongchen.Service.APIService;
@@ -33,10 +34,16 @@ public class Fragment_PhoBien extends Fragment {
     PhobienAdapter phobienAdapter;
     ArrayList<Playlist> playlists;
 
+
+    private Dialog dialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_phobien, container, false);
+
+        dialog = new Dialog(getActivity());
+        dialog.show();
+
         phobienAdapter = new PhobienAdapter(getContext(), new ArrayList<Playlist>());
         recyclerviewphobien = view.findViewById(R.id.listviewphobien);
         tvphobien = view.findViewById(R.id.textviewphobien);
@@ -61,6 +68,8 @@ public class Fragment_PhoBien extends Fragment {
                 phobienAdapter.setData(playlists);
                 recyclerviewphobien.setLayoutManager(new GridLayoutManager(getActivity(), 3));
                 recyclerviewphobien.setAdapter(phobienAdapter);
+
+                dialog.dismiss();
             }
 
             @Override
