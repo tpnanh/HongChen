@@ -71,7 +71,11 @@ public class PlayActivity extends AppCompatActivity {
         dialog.show();
 
         mAuth = FirebaseAuth.getInstance();
-        loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
+        if (mAuth.getCurrentUser()!=null) {
+            loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
+        }else{
+            loveRef = FirebaseDatabase.getInstance().getReference();
+        }
 
         GetDataFromIntent();
         init();
@@ -332,23 +336,30 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void getLoadData() {
-        id = baihatArrayList.get(0).getIdBaiHat(); ;
-        loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    imagelovebutton.setImageResource(R.drawable.love);
-                    lovebutton = true;
-                }else{
-                    lovebutton = false;
-                    imagelovebutton.setImageResource(R.drawable.nolove);
+        id = baihatArrayList.get(0).getIdBaiHat();
+        if (mAuth.getCurrentUser()!=null) {
+            loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        imagelovebutton.setImageResource(R.drawable.love);
+                        lovebutton = true;
+                    } else {
+                        lovebutton = false;
+                        imagelovebutton.setImageResource(R.drawable.nolove);
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+            lovebutton = false;
+            imagelovebutton.setImageResource(R.drawable.nolove);
+        }
     }
 
     class Playmp3 extends AsyncTask<String,Void,String> {

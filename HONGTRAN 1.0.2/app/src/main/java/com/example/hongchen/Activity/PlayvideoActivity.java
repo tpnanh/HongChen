@@ -53,8 +53,12 @@ public class PlayvideoActivity extends AppCompatActivity {
         dialog.show();
 
         mAuth = FirebaseAuth.getInstance();
-        loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
-
+        if (mAuth.getCurrentUser()!=null) {
+            loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
+        }
+        else{
+            loveRef = FirebaseDatabase.getInstance().getReference();
+        }
         GetDataFromIntent();
         init();
         onClick(url);
@@ -101,22 +105,28 @@ public class PlayvideoActivity extends AppCompatActivity {
 
     private void getLoadData() {
         id = url.replace(".","").replace("/","");
-        loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    ibLike.setImageResource(R.drawable.love);
-                    checkIB = false;
-                }else{
-                    checkIB = true;
-                    ibLike.setImageResource(R.drawable.nolove);
+        if (mAuth.getCurrentUser()!=null) {
+            loveRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        ibLike.setImageResource(R.drawable.love);
+                        checkIB = false;
+                    } else {
+                        checkIB = true;
+                        ibLike.setImageResource(R.drawable.nolove);
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }else {
+            checkIB = true;
+            ibLike.setImageResource(R.drawable.nolove);
+        }
     }
 
     private void GetDataFromIntent() {
