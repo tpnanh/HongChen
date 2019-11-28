@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.hongchen.Activity.HomePage;
 import com.example.hongchen.Activity.MucyeuthichActivity;
+import com.example.hongchen.Activity.ProfileInformation;
 import com.example.hongchen.Activity.Question;
 import com.example.hongchen.Model.User;
 import com.example.hongchen.R;
@@ -42,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Fragment_Profile extends Fragment {
     private Context context;
     View view;
-    private TextView tvUserName, tvLogout, tvLike, tvQuestion, profileEmail, profilePassword;
+    private TextView tvUserName, tvLogout, tvLike, tvQuestion, tvInformation;
     private CircleImageView ivAvatar;
 
     private FirebaseAuth mAuth;
@@ -70,13 +71,20 @@ public class Fragment_Profile extends Fragment {
         tvLike = view.findViewById(R.id.textviewlike);
         tvLogout = view.findViewById(R.id.textviewlogout);
         tvQuestion = view.findViewById(R.id.textviewquestion);
-        profileEmail = view.findViewById(R.id.profile_email);
-        profilePassword = view.findViewById(R.id.profile_password);
+        tvInformation = view.findViewById(R.id.textviewinformation);
 
         userRef = FirebaseDatabase.getInstance().getReference();
         storageProfilePictureRef = FirebaseStorage.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
+
+        tvInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in2 = new Intent(getActivity(), ProfileInformation.class);
+                startActivity(in2);
+            }
+        });
 
         ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +134,6 @@ public class Fragment_Profile extends Fragment {
             uploadStorageFirebase();
         } else {
             Toast.makeText(getActivity(), "Error. Please try again", Toast.LENGTH_SHORT).show();
-            //getActivity().finish();
         }
     }
 
@@ -168,12 +175,6 @@ public class Fragment_Profile extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 tvUserName.setText(user.getUserName());
-                profileEmail.setText(mAuth.getCurrentUser().getEmail());
-
-                String password = user.getPassword();
-                String pw = password.substring(password.length()-2);
-
-                profilePassword.setText("****" + pw);
 
                 if (user.getImage().equals("")){
                    ivAvatar.setImageResource(R.drawable.ic_launcher_background);
@@ -181,11 +182,11 @@ public class Fragment_Profile extends Fragment {
                     Picasso.get().load(user.getImage()).into(ivAvatar);
                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
     }
 

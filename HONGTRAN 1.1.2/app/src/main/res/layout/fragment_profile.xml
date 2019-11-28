@@ -47,66 +47,34 @@
         </TextView>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_email"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:layout_marginStart="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/ll_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_avatar">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your email"
-            android:layout_marginLeft="60dp"
-            android:gravity="center_vertical"
-            android:textSize="18sp"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_password"
+        android:id="@+id/ll_information"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/ll_like"
+        app:layout_constraintBottom_toTopOf="@id/ll_logout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_email">
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_information"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/information" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:id="@+id/profile_password"
+            android:id="@+id/textviewinformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your password"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="18dp"
-            android:textSize="20sp"
-            />
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:text="Thông tin cá nhân"
+            android:textSize="19sp">
 
+        </TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -114,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/ll_logout"
         app:layout_constraintStart_toStartOf="parent"
