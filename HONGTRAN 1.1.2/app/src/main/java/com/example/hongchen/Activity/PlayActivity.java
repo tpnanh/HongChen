@@ -61,6 +61,10 @@ public class PlayActivity extends AppCompatActivity {
     String repeat = "1";
     boolean lovebutton = false;
     boolean checknext = false;
+    boolean flag = false;
+    boolean flag1 = true;
+    int half_duration = 0;
+
 
     String url,id;
 
@@ -84,6 +88,7 @@ public class PlayActivity extends AppCompatActivity {
             loveRef = FirebaseDatabase.getInstance().getReference().child("Love").child(mAuth.getCurrentUser().getUid());
         }else{
             loveRef = FirebaseDatabase.getInstance().getReference();
+            flag=true;
         }
 
         GetDataFromIntent();
@@ -114,6 +119,7 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
+
                     imagebuttonplay.setImageResource(R.drawable.open);
                     if (fragment_dianhac.objectAnimator != null){
                         fragment_dianhac.objectAnimator.pause();
@@ -435,6 +441,7 @@ public class PlayActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
         textview_time_total.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
         seekbar_song.setMax(mediaPlayer.getDuration());
+        half_duration = (int)(mediaPlayer.getDuration()/2);
     }
 
     private void UpdateTimeSong() {
@@ -460,9 +467,24 @@ public class PlayActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    if (mediaPlayer.getCurrentPosition() >= half_duration && flag==true){
+
+                        imagebuttonplay.setImageResource(R.drawable.open);
+                        if (fragment_dianhac.objectAnimator != null){
+                            fragment_dianhac.objectAnimator.pause();
+                            Toast.makeText(PlayActivity.this,"Vui lòng đăng nhập để tiếp tục nghe bài hát",Toast.LENGTH_LONG).show();
+                            mediaPlayer.stop();
+                            mediaPlayer = null;
+                        }
+
+
+                    }
                 }
             }
+
         }, 100);
+
         final Handler handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
             @Override
@@ -560,7 +582,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
-
-
     }
+
+
 }

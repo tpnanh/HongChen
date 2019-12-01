@@ -21,8 +21,6 @@ public class HomePage extends AppCompatActivity {
     TabLayout tabLayout;
     private FirebaseAuth mAuth;
 
-    //ArrayList<String>imagesUri=new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
